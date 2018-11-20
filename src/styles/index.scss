@@ -1,0 +1,137 @@
+@import '../styles/variables';
+@import '../styles/mixin';
+@import './transition.scss';
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus{
+  outline: none;
+}
+
+#app{
+  height: 100%;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.app-wrapper {
+  background-color: $base !important;
+  color: #fff;
+  .aside-container {
+    .scrollbar-wrapper {
+      position: absolute;
+      z-index: 99;
+      display: flex;
+      height: 100%;
+      overflow: hidden;
+      background-color: $contrast !important;
+    }
+
+    .el-scrollbar {
+      @include scrollBar;
+      height: 100%;
+      width: 100%;
+      .el-scrollbar__wrap {
+        overflow-y: auto;
+        overflow-x: hidden !important;
+        .el-scrollbar__view {
+          height: 100%;
+        }
+      }
+      .el-scrollbar__bar {
+        &.is-horizontal {
+          display: none;
+        }
+        .el-scrollbar__thumb {
+          background-color: $primary !important;
+        }
+      }
+    }
+
+    .el-menu {
+      background: transparent;
+      border: 0px;
+    }
+    .el-menu--collapse {
+      .el-submenu {
+        overflow: hidden;
+        .el-submenu__title {
+          span {
+            display: inline-block;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            width: 0;
+          }
+          .el-submenu__icon-arrow {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .menu-wrapper {
+      .sidebar-toolbar {
+        position: absolute;
+        top: 0px;
+        right: 20px;
+      }
+      a {
+        display: block;
+      }
+    }
+
+    .draggable-wrapper{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+}
+
+.svg-icon {
+  margin-right: 16px;
+}
+
+.withoutAnimation {
+  .main-container,
+  .sidebar-container {
+    transition: none;
+  }
+}
