@@ -1,5 +1,6 @@
 export default {
   route: {
+    allMenus: 'All Menus',
     dashboard: 'Dashboard',
     introduction: 'Introduction',
     documentation: 'Documentation',

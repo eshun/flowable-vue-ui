@@ -1,5 +1,14 @@
 <template>
   <div :style="asideWidth" class="scrollbar-wrapper" @mouseenter="handleClickOutside" @mouseleave="handleClickOutside">
+    <!--<div class="menu-wrapper">-->
+    <!--<svg-icon icon-class="list" />-->
+    <!--<span v-text="generateTitle('allMenus')" />-->
+    <!--<span class='sidebar-toolbar'>-->
+    <!--<span class='sidebar-icon-box'>-->
+    <!--<i class='el-icon-more' />-->
+    <!--</span>-->
+    <!--</span>-->
+    <!--</div>-->
     <el-scrollbar>
       <el-menu
         :show-timeout="200"
@@ -11,10 +20,10 @@
         active-text-color="#01CEA2"
       >
         <draggable
-          element="div"
-          class="draggable-wrapper"
           :options="{handle:'.sidebar-icon-box-drag'}"
           :list="permission_routers"
+          element="div"
+          class="draggable-wrapper"
           @end="dragEnd">
           <sidebar-item v-for="route in permission_routers" :key="route.path" :item="route" :base-path="route.path"/>
         </draggable>
@@ -26,10 +35,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
+import { generateTitle } from '@/utils/i18n'
 import SidebarItem from './SidebarItem'
 
 export default {
-  components: { SidebarItem,draggable },
+  components: { SidebarItem, draggable },
   computed: {
     ...mapGetters([
       'permission_routers',
@@ -40,7 +50,7 @@ export default {
     },
     asideWidth() {
       return {
-        width: this.sidebar.opened ? '300px' : '60px'
+        width: this.sidebar.opened ? '300px' : '64px'
       }
     }
   },
@@ -53,8 +63,9 @@ export default {
       }
     },
     dragEnd: evt => {
-      console.log(evt);
-    }
+      console.log(evt)
+    },
+    generateTitle
   }
 }
 </script>

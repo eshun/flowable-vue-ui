@@ -1,6 +1,6 @@
 <template>
   <el-container :class="classObj" class="app-wrapper">
-    <el-aside width="60px" class="aside-container">
+    <el-aside width="64px" class="aside-container">
       <sidebar/>
       <div v-if="sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     </el-aside>

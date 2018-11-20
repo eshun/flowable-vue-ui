@@ -64,9 +64,9 @@ div:focus{
     }
 
     .el-scrollbar {
-      @include scrollBar;
       height: 100%;
       width: 100%;
+      overflow: initial;
       .el-scrollbar__wrap {
         overflow-y: auto;
         overflow-x: hidden !important;
@@ -86,7 +86,7 @@ div:focus{
 
     .el-menu {
       background: transparent;
-      border: 0px;
+      border: 0;
     }
     .el-menu--collapse {
       .el-submenu {
@@ -107,6 +107,8 @@ div:focus{
     }
 
     .menu-wrapper {
+      li{
+      }
       .sidebar-toolbar {
         position: absolute;
         top: 0px;
@@ -117,11 +119,14 @@ div:focus{
       }
     }
 
-    .draggable-wrapper{
+    .draggable-wrapper {
       width: 100%;
       height: 100%;
       overflow: hidden;
     }
+  }
+  .main-container {
+    padding-top: 0;
   }
 }
 
