@@ -1,4 +1,4 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login'
+import { loginByUsername, logout, getUserInfo, getUserMenu } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -11,6 +11,7 @@ const user = {
     avatar: '',
     introduction: '',
     roles: [],
+    menus: [],
     setting: {
       articlePlatform: []
     }
@@ -40,6 +41,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_MENUS: (state, menus) => {
+      state.menus = menus
     }
   },
 
@@ -77,6 +81,27 @@ const user = {
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 获取用户菜单
+    getUserMenu({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getUserMenu(state.token).then(response => {
+          if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
+            reject('error')
+          }
+          const data = response.data
+
+          if (data && data.length > 0) { // 验证返回的是否是一个非空数组
+            commit('SET_MENUS', data)
+          } else {
+            reject('getUserMenu: menu must be a non-null array !')
+          }
           resolve(response)
         }).catch(error => {
           reject(error)

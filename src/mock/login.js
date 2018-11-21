@@ -7,14 +7,20 @@ const userMap = {
     introduction: '我是超级管理员',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin'
-  },
-  editor: {
-    roles: ['editor'],
-    token: 'editor',
-    introduction: '我是编辑',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
   }
+}
+const menuMap = {
+  admin: [{
+    name: 'documentation',
+    icon: 'documentation',
+    remarks: ''
+  },
+  {
+    url: 'https://github.com/PanJiaChen/vue-element-admin',
+    name: 'externalLink',
+    icon: 'link'
+  }
+  ]
 }
 
 export default {
@@ -28,6 +34,14 @@ export default {
       return userMap[token]
     } else {
       return false
+    }
+  },
+  getMenu: config => {
+    const { token } = param2Obj(config.url)
+    if (menuMap[token]) {
+      return menuMap[token]
+    } else {
+      return []
     }
   },
   logout: () => 'success'

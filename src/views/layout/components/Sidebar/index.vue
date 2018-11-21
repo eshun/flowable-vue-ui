@@ -1,14 +1,16 @@
 <template>
   <div :style="asideWidth" class="scrollbar-wrapper" @mouseenter="handleClickOutside" @mouseleave="handleClickOutside">
-    <!--<div class="menu-wrapper">-->
-    <!--<svg-icon icon-class="list" />-->
-    <!--<span v-text="generateTitle('allMenus')" />-->
-    <!--<span class='sidebar-toolbar'>-->
-    <!--<span class='sidebar-icon-box'>-->
-    <!--<i class='el-icon-more' />-->
-    <!--</span>-->
-    <!--</span>-->
-    <!--</div>-->
+    <div class="all-menu-wrapper menu-wrapper el-menu-item">
+      <a>
+        <svg-icon icon-class="list" />
+        <span v-text="generateTitle('allMenus')" />
+      </a>
+      <span class="sidebar-toolbar">
+        <span class="sidebar-icon-box">
+          <i class="el-icon-more" />
+        </span>
+      </span>
+    </div>
     <el-scrollbar>
       <el-menu
         :show-timeout="200"
@@ -54,6 +56,9 @@ export default {
       }
     }
   },
+  mounted() {
+    console.log(this.permission_routers)
+  },
   methods: {
     handleClickOutside(e) {
       if (e.type === 'mouseenter') {
@@ -71,5 +76,16 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-
+  .all-menu-wrapper {
+    border-top: 1px solid hsla(0,0%,100%,.1);
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #ffffff;
+  }
+  .all-menu-wrapper:focus,.all-menu-wrapper:hover {
+    outline: 0;
+    background-color: rgb(26,34,44)
+  }
 </style>

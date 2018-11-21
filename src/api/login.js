@@ -27,3 +27,10 @@ export function getUserInfo(token) {
   })
 }
 
+export function getUserMenu(token) {
+  return request({
+    url: '/user/menu',
+    method: 'get',
+    params: { token }
+  })
+}

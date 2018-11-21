@@ -57,14 +57,14 @@ div:focus{
     .scrollbar-wrapper {
       position: absolute;
       z-index: 99;
-      display: flex;
+      display: block;
       height: 100%;
       overflow: hidden;
       background-color: $contrast !important;
     }
 
     .el-scrollbar {
-      height: 100%;
+      height: calc(100% - 48px);
       width: 100%;
       overflow: initial;
       .el-scrollbar__wrap {
@@ -106,16 +106,17 @@ div:focus{
       }
     }
 
-    .menu-wrapper {
-      li{
-      }
+    .el-menu-item {
+      display: flex;
+      width: 100%;
       .sidebar-toolbar {
-        position: absolute;
-        top: 0px;
-        right: 20px;
+        //position: absolute;
+        //top: 0px;
+        //right: 20px;
       }
       a {
         display: block;
+        flex: 1 0 auto;
       }
     }
 
@@ -128,11 +129,11 @@ div:focus{
   .main-container {
     padding-top: 0;
   }
+  .svg-icon {
+    margin-right: 16px;
+  }
 }
 
-.svg-icon {
-  margin-right: 16px;
-}
 
 .withoutAnimation {
   .main-container,

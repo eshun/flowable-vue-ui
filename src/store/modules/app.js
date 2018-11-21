@@ -3,8 +3,9 @@ import Cookies from 'js-cookie'
 const app = {
   state: {
     sidebar: {
-      opened: true,
-      withoutAnimation: false
+      opened: false,
+      withoutAnimation: false,
+      favorites: Cookies.getJSON('menuFavorites') || []
     },
     device: 'desktop',
     language: Cookies.get('language') || 'en',
@@ -22,6 +23,25 @@ const app = {
     CLOSE_SIDEBAR: (state, withoutAnimation) => {
       state.sidebar.opened = false
       state.sidebar.withoutAnimation = withoutAnimation
+    },
+    ADD_FAVORITES: (state, menu) => {
+      if (state.sidebar.favorites.some(v => v.path === menu.path)) return
+      state.sidebar.favorites.push(
+        Object.assign({}, menu)
+      )
+      Cookies.set('menuFavorites', state.sidebar.favorites)
+    },
+    REMOVE_FAVORITES: (state, menu) => {
+      for (const [i, v] of state.sidebar.favorites.entries()) {
+        if (v.path === menu.path) {
+          state.sidebar.favorites.splice(i, 1)
+          break
+        }
+      }
+      Cookies.set('menuFavorites', state.sidebar.favorites)
+    },
+    SORT_FAVORITES: (state, { from, to }) => {
+      // arr.splice(x - 1, 1, ...arr.splice(y - 1, 1, arr[x - 1]))
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
@@ -45,6 +65,15 @@ const app = {
     },
     closeSideBar({ commit }, { withoutAnimation }) {
       commit('CLOSE_SIDEBAR', withoutAnimation)
+    },
+    addFavorites({ commit }, menu) {
+
+    },
+    removeFavorites({ commit }, menu) {
+
+    },
+    sortFavorites({ commit }, { from, to }) {
+
     },
     toggleDevice({ commit }, device) {
       commit('TOGGLE_DEVICE', device)
