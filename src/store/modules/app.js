@@ -1,17 +1,46 @@
 import Cookies from 'js-cookie'
 
+function getFavorites(allMenus) {
+  const routers = []
+  // console.log(constantRouterMap)
+  allMenus && allMenus.forEach(r => {
+    if (r.alwaysShow) {
+      routers.push(r)
+    } else {
+      if (r.children) {
+        const child = r.children.filter(c => c.alwaysShow)
+        if (child && child.length > 0) {
+          r.children = child
+          routers.push(r)
+        }
+      }
+    }
+  })
+  routers.concat(Cookies.getJSON('menuFavorites'))
+  return routers
+}
+
 const app = {
   state: {
     sidebar: {
       opened: false,
       withoutAnimation: false,
-      favorites: Cookies.getJSON('menuFavorites') || []
+      favorites: getFavorites()
     },
+    appTitle: undefined,
     device: 'desktop',
     language: Cookies.get('language') || 'en',
-    size: Cookies.get('size') || 'medium'
+    size: Cookies.get('size') || 'medium',
+    allMenus: []
   },
   mutations: {
+    SET_APPTITLE: (state, appTitle) => {
+      state.appTitle = appTitle
+    },
+    SET_ALLMENUS: (state, allMenus) => {
+      state.allMenus = allMenus
+      state.sidebar.favorites = getFavorites(allMenus)
+    },
     TOGGLE_SIDEBAR: (state) => {
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
@@ -56,6 +85,12 @@ const app = {
     }
   },
   actions: {
+    setAppTitle({ commit }, appTitle) {
+      commit('SET_APPTITLE', appTitle)
+    },
+    setAllMenus({ commit }, allMenus) {
+      commit('SET_ALLMENUS', allMenus)
+    },
     toggleSideBar({ commit }, opened) {
       if (opened !== undefined) {
         commit('TOGGLE_SIDEBAR_OPENED', opened)
@@ -67,13 +102,13 @@ const app = {
       commit('CLOSE_SIDEBAR', withoutAnimation)
     },
     addFavorites({ commit }, menu) {
-
+      commit('ADD_FAVORITES', menu)
     },
     removeFavorites({ commit }, menu) {
-
+      commit('REMOVE_FAVORITES', menu)
     },
     sortFavorites({ commit }, { from, to }) {
-
+      commit('SORT_FAVORITES', { from, to })
     },
     toggleDevice({ commit }, device) {
       commit('TOGGLE_DEVICE', device)

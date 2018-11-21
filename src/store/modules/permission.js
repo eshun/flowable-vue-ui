@@ -5,7 +5,7 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, data) => {
-      state.routers = state.routers.concat(data)
+      state.routers = data
     }
   },
   actions: {

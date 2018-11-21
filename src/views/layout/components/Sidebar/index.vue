@@ -23,11 +23,11 @@
       >
         <draggable
           :options="{handle:'.sidebar-icon-box-drag'}"
-          :list="permission_routers"
+          :list="sidebar.favorites"
           element="div"
           class="draggable-wrapper"
           @end="dragEnd">
-          <sidebar-item v-for="route in permission_routers" :key="route.path" :item="route" :base-path="route.path"/>
+          <sidebar-item v-for="route in sidebar.favorites" :key="route.path" :item="route" :base-path="route.path"/>
         </draggable>
       </el-menu>
     </el-scrollbar>
@@ -45,6 +45,7 @@ export default {
   computed: {
     ...mapGetters([
       'permission_routers',
+      'allMenus',
       'sidebar'
     ]),
     isCollapse() {
@@ -57,7 +58,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.permission_routers)
+    console.log(this.permission_routers, this.allMenus, this.sidebar.favorites)
   },
   methods: {
     handleClickOutside(e) {

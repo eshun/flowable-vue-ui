@@ -1,8 +1,10 @@
 const getters = {
+  appTitle: state => state.app.appTitle,
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
   size: state => state.app.size,
   device: state => state.app.device,
+  allMenus: state => state.app.allMenus,
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
   token: state => state.user.token,
