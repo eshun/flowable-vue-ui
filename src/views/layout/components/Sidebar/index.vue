@@ -43,7 +43,7 @@
     </el-scrollbar>
 
     <el-dialog
-      :visible.sync="isShown"
+      :visible.sync="isShown && sidebar.opened"
       :modal="false"
       :append-to-body="false"
       :close-on-click-modal="false"
@@ -94,7 +94,7 @@ export default {
       if (e.type === 'mouseenter' || e.type === 'focus') {
         this.$store.dispatch('toggleSideBar', true)
       } else if (e.type === 'mouseleave' || e.type === 'blur') {
-        // this.isShown = false
+        this.isShown = false
         this.$store.dispatch('toggleSideBar', false)
       }
     },
