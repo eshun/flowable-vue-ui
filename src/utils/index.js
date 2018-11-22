@@ -295,7 +295,8 @@ export function childToParent(items) {
     if (item.children) {
       item.children.forEach((child, j) => {
         child.parent = item
-        items.splice(i + 1 + j, 0, child)
+        items.push(child)
+        //items.splice(i + j, 0, child)
       })
       childToParent(item.children)
     }

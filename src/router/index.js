@@ -21,6 +21,7 @@ export const constantRouterMap = [
   {
     path: '/redirect',
     component: Layout,
+    hide: true,
     children: [
       {
         path: '/redirect/:path*',
@@ -31,6 +32,7 @@ export const constantRouterMap = [
   {
     path: '/login',
     name: 'login',
+    hide: true,
     component: () => import('@/views/login/index'),
     meta: { name: 'login', anonymousAuthorize: true }
   },
@@ -42,12 +44,14 @@ export const constantRouterMap = [
   {
     path: '/404',
     name: '404',
+    hide: true,
     component: () => import('@/views/errorPage/404'),
     meta: { title: '404', anonymousAuthorize: true }
   },
   {
     path: '/401',
     name: '401',
+    hide: true,
     component: () => import('@/views/errorPage/401'),
     meta: { title: '401', anonymousAuthorize: true }
   },
@@ -67,7 +71,8 @@ export const constantRouterMap = [
   },
   {
     path: '*',
-    redirect: '/404'
+    redirect: '/404',
+    hide: true
   }
 ]
 
@@ -129,7 +134,6 @@ export const asyncRouterMap = [
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
-    alwaysShow: true, // will always show the root menu
     meta: {
       title: 'permission',
       icon: 'lock',
