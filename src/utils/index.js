@@ -289,3 +289,16 @@ export function uniqueArr(arr) {
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
+
+export function childToParent(items) {
+  items.forEach((item, i) => {
+    if (item.children) {
+      item.children.forEach((child, j) => {
+        child.parent = item
+        items.splice(i + 1 + j, 0, child)
+      })
+      childToParent(item.children)
+    }
+  })
+  return items
+}

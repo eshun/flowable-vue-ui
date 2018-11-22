@@ -3,15 +3,12 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
-import { isExternal } from '@/utils/'
+import { isExternal, childToParent } from '@/utils/'
 import { getToken } from '@/utils/auth' // getToken from cookie
-import { generateTitle } from '@/utils/i18n'
+import checkPermission from '@/utils/permission' // getToken from cookie
+import { getI18nTitle } from '@/utils/i18n'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
-
-function hasPermission(roles, permissionRoles) {
-  return true
-}
 
 /**
  * 默认菜单的深度为两级
@@ -28,42 +25,44 @@ function getRouters(menus) {
     }
     store.dispatch('setAllMenus', allMenus)
   }
-
+  allMenus = childToParent(allMenus)
   if (menus && menus.length > 0) {
+
     menus.forEach(menu => {
       if (menu.url && isExternal(menu.url)) {
         routers.push(getExternalLink(menu))
       } else {
-        // if (menu.children) {
-        //   // ttt
-        //   const temp = allMenus.filter(r => r.name === menu.name)
-        //   let tempChilds = []
-        //   if (temp && temp.length === 1) {
-        //     menu.children.forEach(c => {
-        //       const child = temp[0].children.filter(r => r.name === c.name)
-        //       tempChilds = tempChilds.concat(child)
-        //     })
-        //     temp[0].children = tempChilds
-        //     routers.push(temp[0])
-        //   }
-        // } else {
-        //   allMenus.forEach(r => {
-        //     if (r.children && r.children.length > 0) {
-        //       const temp = r.children.filter(c => c.name === menu.name)
-        //       if (temp) {
-        //         routers.push({
-        //           r,
-        //           children: temp[0]
-        //         })
-        //       }
-        //     }
-        //   })
-        // }
+        const temp = allMenus.filter(r => r.name === menu.name)
+        if (menu.children) {
+          menu.children.forEach(c => {
+            temp.children = temp.children.concat(allMenus.filter(r => r.name === c.name))
+          })
+        }
+        if (temp.length > 0) {
+          const router = temp[0]
+          if (router.parent) {
+            const parent = router.parent
+            delete router.parent
+            const index = routers.findIndex(r => r.path === parent.path)
+            if (index > -1) {
+              if (routers[index].children) {
+                routers[index].children.push(router)
+              } else {
+                routers[index].children = [router]
+              }
+            } else {
+              routers.push({
+                ...parent,
+                children: [router]
+              })
+            }
+          } else {
+            routers.push(router)
+          }
+        }
       }
     })
   }
-
-  console.log(menus, routers)
   return routers
 }
 
@@ -73,7 +72,7 @@ router.beforeEach((to, from, next) => {
     store.dispatch('setAppTitle', document.title)
   }
   if (to.meta && to.meta.title) {
-    // document.title = generateTitle(to.meta.title) + '-' + store.getters.appTitle
+    document.title = getI18nTitle(to.meta.title) + '-' + store.getters.appTitle
   }
   if (getToken()) { // determine if there has token
     /* has token*/
@@ -88,11 +87,9 @@ router.beforeEach((to, from, next) => {
           const routers = getRouters(menus)
           // console.log(routers)
           store.dispatch('setRoutes', routers).then(() => {
-            router.addRoutes(asyncRouterMap) // 动态添加可访问路由表
+            router.addRoutes(routers) // 动态添加可访问路由表
 
-            // 判断访问的页面是否存在路由表中
-            // hasPermission("", "")
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {
@@ -100,19 +97,15 @@ router.beforeEach((to, from, next) => {
             next({ path: '/' })
           })
         })
-      } else {
-        // 判断访问的页面是否存在路由表中
-        next()
       }
     }
+  }
+  /* has no token*/
+  if (to.meta.anonymousAuthorize) { // 匿名访问
+    next()
   } else {
-    /* has no token*/
-    if (to.meta.anonymousAuthorize) { // 匿名访问
-      next()
-    } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
-      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
-    }
+    next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+    NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
   }
 })
 

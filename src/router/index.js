@@ -105,7 +105,7 @@ export const asyncRouterMap = [
       {
         path: 'index',
         component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
+        name: 'documentation',
         meta: { title: 'documentation', icon: 'documentation', noCache: true }
       }
     ]
