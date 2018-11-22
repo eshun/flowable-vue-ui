@@ -45,7 +45,6 @@ export default {
   computed: {
     ...mapGetters([
       'permission_routers',
-      'allMenus',
       'sidebar'
     ]),
     isCollapse() {
@@ -58,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.permission_routers, this.allMenus, this.sidebar.favorites)
+    console.log(this.permission_routers, this.sidebar.favorites)
   },
   methods: {
     handleClickOutside(e) {

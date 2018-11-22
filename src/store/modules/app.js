@@ -1,9 +1,8 @@
 import Cookies from 'js-cookie'
 
-function getFavorites(allMenus) {
+function getFavorites(menu) {
   const routers = []
-  // console.log(constantRouterMap)
-  allMenus && allMenus.forEach(r => {
+  menu && menu.forEach(r => {
     if (r.alwaysShow) {
       routers.push(r)
     } else {
@@ -27,20 +26,11 @@ const app = {
       withoutAnimation: false,
       favorites: getFavorites()
     },
-    appTitle: undefined,
     device: 'desktop',
     language: Cookies.get('language') || 'en',
-    size: Cookies.get('size') || 'medium',
-    allMenus: []
+    size: Cookies.get('size') || 'medium'
   },
   mutations: {
-    SET_APPTITLE: (state, appTitle) => {
-      state.appTitle = appTitle
-    },
-    SET_ALLMENUS: (state, allMenus) => {
-      state.allMenus = allMenus
-      state.sidebar.favorites = getFavorites(allMenus)
-    },
     TOGGLE_SIDEBAR: (state) => {
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
@@ -59,6 +49,9 @@ const app = {
         Object.assign({}, menu)
       )
       Cookies.set('menuFavorites', state.sidebar.favorites)
+    },
+    INIT_FAVORITES: (state, menu) => {
+      state.sidebar.favorites = getFavorites(menu)
     },
     REMOVE_FAVORITES: (state, menu) => {
       for (const [i, v] of state.sidebar.favorites.entries()) {
@@ -85,12 +78,6 @@ const app = {
     }
   },
   actions: {
-    setAppTitle({ commit }, appTitle) {
-      commit('SET_APPTITLE', appTitle)
-    },
-    setAllMenus({ commit }, allMenus) {
-      commit('SET_ALLMENUS', allMenus)
-    },
     toggleSideBar({ commit }, opened) {
       if (opened !== undefined) {
         commit('TOGGLE_SIDEBAR_OPENED', opened)

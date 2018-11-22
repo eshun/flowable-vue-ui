@@ -1,5 +1,5 @@
-import store from '@/store'
-import { childToParent } from './index'
+// import store from '@/store'
+// import { childToParent } from './index'
 
 /**
  * @param {Array} value
@@ -8,7 +8,7 @@ import { childToParent } from './index'
  */
 export default function checkPermission(to) {
   if (to && to.path) {
-    const permission_routers = store.getters && store.getters.permission_routers
+    // const permission_routers = store.getters && store.getters.permission_routers
     // const routers = childToParent(permission_routers)
     //
     // const hasPermission = routers.some(router => router.path === to.path)
