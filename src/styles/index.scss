@@ -125,6 +125,16 @@ div:focus{
       height: 100%;
       overflow: hidden;
     }
+    .el-dialog{
+      margin-left: 300px;
+      height: calc(100% - 30px);
+      .el-dialog__body {
+        float: left;
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   .main-container {
     padding-top: 0;
@@ -141,3 +151,4 @@ div:focus{
     transition: none;
   }
 }
+

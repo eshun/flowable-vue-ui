@@ -1,7 +1,17 @@
 <template>
-  <div :style="asideWidth" class="scrollbar-wrapper" @mouseenter="handleClickOutside" @mouseleave="handleClickOutside">
+  <div
+    :style="asideWidth"
+    class="scrollbar-wrapper"
+    @mouseenter="handleClickOutside"
+    @mouseleave="handleClickOutside"
+    @focus="handleClickOutside"
+    @blur="handleClickOutside"
+  >
+    <div class="logo-wrapper">
+      <img :src="getLogo"/>
+    </div>
     <div class="all-menu-wrapper menu-wrapper el-menu-item">
-      <a>
+      <a @click="isShown=!isShown">
         <svg-icon icon-class="list" />
         <span v-text="generateTitle('allMenus')" />
       </a>
@@ -31,6 +41,17 @@
         </draggable>
       </el-menu>
     </el-scrollbar>
+
+    <el-dialog
+      :visible.sync="isShown"
+      :modal="false"
+      :append-to-body="false"
+      :close-on-click-modal="false"
+      width="50%"
+      top="10px"
+    >
+      <dialog-menus></dialog-menus>
+    </el-dialog>
   </div>
 </template>
 
@@ -39,9 +60,15 @@ import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 import { generateTitle } from '@/utils/i18n'
 import SidebarItem from './SidebarItem'
+import DialogMenus from './DialogMenus'
 
 export default {
-  components: { SidebarItem, draggable },
+  data () {
+    return {
+      isShown: false
+    }
+  },
+  components: { SidebarItem, draggable, DialogMenus },
   computed: {
     ...mapGetters([
       'permission_routers',
@@ -54,16 +81,20 @@ export default {
       return {
         width: this.sidebar.opened ? '300px' : '64px'
       }
+    },
+    getLogo() {
+      return require('@/assets/logo.png')
     }
   },
   mounted() {
-    console.log(this.permission_routers, this.sidebar.favorites)
+    // console.log(this.permission_routers, this.sidebar.favorites)
   },
   methods: {
     handleClickOutside(e) {
-      if (e.type === 'mouseenter') {
+      if (e.type === 'mouseenter' || e.type === 'focus') {
         this.$store.dispatch('toggleSideBar', true)
-      } else if (e.type === 'mouseleave') {
+      } else if (e.type === 'mouseleave' || e.type === 'blur') {
+        // this.isShown = false
         this.$store.dispatch('toggleSideBar', false)
       }
     },
@@ -87,5 +118,13 @@ export default {
   .all-menu-wrapper:focus,.all-menu-wrapper:hover {
     outline: 0;
     background-color: rgb(26,34,44)
+  }
+  .logo-wrapper{
+    margin: 10px auto;
+    text-align: center;
+    img{
+      width: 70%;
+      height: auto;
+    }
   }
 </style>
