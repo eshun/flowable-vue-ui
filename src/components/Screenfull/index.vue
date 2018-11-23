@@ -70,7 +70,6 @@ export default {
 .screenfull-svg {
   display: inline-block;
   cursor: pointer;
-  fill: #ffffff;
   width: 20px;
   height: 20px;
   vertical-align: 10px;

@@ -1,20 +1,18 @@
 import Cookies from 'js-cookie'
+import { childToParent } from '@/utils/'
 
 function getFavorites(menu) {
   const routers = []
-  menu && menu.forEach(r => {
-    if (r.alwaysShow) {
-      routers.push(r)
-    } else {
-      if (r.children) {
-        const child = r.children.filter(c => c.alwaysShow)
-        if (child && child.length > 0) {
-          r.children = child
-          routers.push(r)
-        }
+  if (menu) {
+    const allMenu = childToParent(menu)
+    const item = allMenu.filter(c => c.alwaysShow)
+    item.forEach(r => {
+      if (r.parent) {
+        r.path = r.parent.path + '/' + r.path
       }
-    }
-  })
+      routers.push(r)
+    })
+  }
   routers.concat(Cookies.getJSON('menuFavorites'))
   return routers
 }

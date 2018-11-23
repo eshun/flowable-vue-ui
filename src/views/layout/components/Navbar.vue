@@ -4,6 +4,13 @@
     <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
+      <template v-if="device!=='mobile'">
+        <lang-select class="international right-menu-item"/>
+
+        <el-tooltip :content="$t('navbar.screenfull')" effect="dark" placement="bottom">
+          <screenfull class="screenfull right-menu-item"/>
+        </el-tooltip>
+      </template>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -20,14 +27,6 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-
-      <template v-if="device!=='mobile'">
-        <error-log class="errLog-container right-menu-item"/>
-
-        <el-tooltip :content="$t('navbar.screenfull')" effect="dark" placement="bottom">
-          <screenfull class="screenfull right-menu-item"/>
-        </el-tooltip>
-      </template>
     </div>
   </div>
 </template>
@@ -103,6 +102,7 @@ export default {
     }
     .screenfull {
       height: 20px;
+      fill: #606266;
     }
     .international{
       vertical-align: top;
