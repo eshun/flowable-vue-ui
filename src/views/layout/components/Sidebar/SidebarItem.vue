@@ -6,13 +6,14 @@
         :class="{'submenu-title-noDropdown':!isNest}"
         :icon="item.meta.icon"
         :title="generateTitle(item.meta.title)"
-        @toggleRemove="toggleRemove" />
+        @toggleRemove="toggleRemove(item)" />
     </template>
   </div>
 </template>
 
 <script>
 import path from 'path'
+import { Message } from 'element-ui'
 import { generateTitle } from '@/utils/i18n'
 import { isExternal } from '@/utils'
 import MenuItem from './MenuItem'
@@ -79,7 +80,11 @@ export default {
       return isExternal(routePath)
     },
     toggleRemove(item) {
-      console.log(item)
+      if (!item.alwaysShow) {
+        this.$store.dispatch('removeFavorites', { name: item.name, path: item.path })
+      } else {
+        Message.error('alwaysShow no unStart')
+      }
     },
     generateTitle
   }

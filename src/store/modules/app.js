@@ -46,7 +46,7 @@ const app = {
       state.sidebar.favorites.push(
         Object.assign({}, menu)
       )
-      Cookies.set('menuFavorites', state.sidebar.favorites)
+      // Cookies.set('menuFavorites', JSON.stringify(state.sidebar.favorites))
     },
     INIT_FAVORITES: (state, menu) => {
       state.sidebar.favorites = getFavorites(menu)
@@ -58,7 +58,7 @@ const app = {
           break
         }
       }
-      Cookies.set('menuFavorites', state.sidebar.favorites)
+      // Cookies.set('menuFavorites', JSON.stringify(state.sidebar.favorites))
     },
     SORT_FAVORITES: (state, { from, to }) => {
       // arr.splice(x - 1, 1, ...arr.splice(y - 1, 1, arr[x - 1]))

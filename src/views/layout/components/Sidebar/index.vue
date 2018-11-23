@@ -99,7 +99,8 @@ export default {
       }
     },
     dragEnd: evt => {
-      console.log(evt)
+      // console.log(evt)
+      // this.$store.dispatch('sortFavorites', { from: evt.from, to: evt.to })
     },
     generateTitle
   }
