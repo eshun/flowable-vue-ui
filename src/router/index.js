@@ -70,6 +70,49 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/flowable-modeler',
+    component: Layout,
+    name: 'flowable-modeler',
+    redirect: '/flowable-modeler/processes',
+    children: [
+      {
+        path: 'processes',
+        component: () => import('@/views/flowable-modeler/processes/index'),
+        name: 'processes',
+        alwaysShow: true,
+        meta: { title: 'processes', icon: 'tree' }
+      },
+      {
+        path: 'casemodels',
+        component: () => import('@/views/flowable-modeler/casemodels/index'),
+        name: 'casemodels',
+        alwaysShow: true,
+        meta: { title: 'casemodels', icon: 'example' }
+      },
+      {
+        path: 'forms',
+        component: () => import('@/views/flowable-modeler/forms/index'),
+        name: 'forms',
+        alwaysShow: true,
+        meta: { title: 'forms', icon: 'form' }
+      },
+      {
+        path: 'decision-tables',
+        component: () => import('@/views/flowable-modeler/decision-tables/index'),
+        name: 'decision-tables',
+        alwaysShow: true,
+        meta: { title: 'decision-tables', icon: 'guide' }
+      },
+      {
+        path: 'apps',
+        component: () => import('@/views/flowable-modeler/apps/index'),
+        name: 'apps',
+        alwaysShow: true,
+        meta: { title: 'apps', icon: 'star' }
+      }
+    ]
+  },
+  {
     path: '*',
     redirect: '/404',
     hide: true
@@ -299,7 +342,6 @@ export const asyncRouterMap = [
     path: '/zip',
     component: Layout,
     redirect: '/zip/download',
-    alwaysShow: true,
     meta: { title: 'zip', icon: 'zip' },
     children: [
       {

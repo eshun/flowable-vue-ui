@@ -1,7 +1,25 @@
 <template>
+  <div>
+    <div class="shape">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
   <div class="login-container">
 
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left">
 
       <div class="title-container">
         <h3 class="title">{{ $t('login.title') }}</h3>
@@ -41,14 +59,9 @@
 
       <div class="tips">
         <span>{{ $t('login.username') }} : admin</span>
-        <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-      </div>
-      <div class="tips">
-        <span style="margin-right:18px;">{{ $t('login.username') }} : editor</span>
-        <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+        <span>{{ $t('login.password') }} : test</span>
       </div>
 
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{ $t('login.thirdparty') }}</el-button>
     </el-form>
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
@@ -58,6 +71,8 @@
       <br>
       <social-sign />
     </el-dialog>
+
+  </div>
 
   </div>
 </template>
@@ -79,7 +94,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value.length < 3) {
         callback(new Error('The password can not be less than 6 digits'))
       } else {
         callback()
@@ -88,7 +103,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '1111111'
+        password: 'test'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -166,8 +181,8 @@ export default {
   /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
   $bg:#283443;
-  $light_gray:#eee;
-  $cursor: #fff;
+  $light_gray:#525f7f;
+  $cursor: #525f7f;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
     .login-container .el-input input{
@@ -194,7 +209,7 @@ export default {
         height: 47px;
         caret-color: $cursor;
         &:-webkit-autofill {
-          -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
+          -webkit-box-shadow: 0 0 0px 1000px #dbdcde inset !important;
           -webkit-text-fill-color: $cursor !important;
         }
       }
@@ -209,15 +224,16 @@ export default {
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#202a37;
 $dark_gray:#889aa4;
-$light_gray:#eee;
+$light_gray:#525f7f;
+$cursor: #525f7f;
 
 .login-container {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: $bg;
+  background: transparent;
   .login-form {
     position: absolute;
     left: 0;
@@ -226,10 +242,16 @@ $light_gray:#eee;
     max-width: 100%;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
+    border: 0!important;
+    background-clip: border-box;
+    border-radius: .25rem;
+    transition: all .15s ease;
+    background-color: #f4f5f7!important;
+    box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07)!important;
   }
   .tips {
     font-size: 14px;
-    color: #fff;
+    color: $cursor;
     margin-bottom: 10px;
     span {
       &:first-of-type {
@@ -254,7 +276,7 @@ $light_gray:#eee;
       font-weight: bold;
     }
     .set-language {
-      color: #fff;
+      color: $dark_gray;
       position: absolute;
       top: 5px;
       right: 0px;
@@ -269,10 +291,77 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
-  .thirdparty-button {
-    position: absolute;
-    right: 35px;
-    bottom: 28px;
-  }
 }
+</style>
+
+<style rel="stylesheet/scss" lang="scss">
+  .shape {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+    background: linear-gradient(87deg, #202a37, #1a174d) !important;
+    span {
+      border-radius: 50%;
+      height: 120px;
+      width: 120px;
+      position: absolute;
+    }
+    :first-child {
+      background: hsla(0,0%,100%,.1);
+      bottom: auto;
+      left: -4%;
+    }
+    :nth-child(2) {
+      background: hsla(0,0%,100%,.1);
+      right: 4%;
+      top: 10%;
+    }
+    :nth-child(3) {
+      background: hsla(0,0%,100%,.3);
+      right: 5.66666%;
+      top: 280px;
+    }
+    :nth-child(4) {
+      background: hsla(0, 0%, 100%, .15);
+      right: 7%;
+      top: 320px
+    }
+    :nth-child(5) {
+      background: hsla(0, 0%, 100%, .05);
+      left: 1%;
+      right: auto;
+      top: 38%
+    }
+    :nth-child(6) {
+      background: hsla(0, 0%, 100%, .15);
+      height: 200px;
+      left: 10%;
+      right: auto;
+      top: 44%;
+      width: 200px
+    }
+    :nth-child(7) {
+      background: hsla(0, 0%, 100%, .04);
+      bottom: 50%;
+      right: 36%
+    }
+    :nth-child(8) {
+      background: hsla(0, 0%, 100%, .2);
+      bottom: 70px;
+      right: 2%
+    }
+    :nth-child(9) {
+      background: hsla(0, 0%, 100%, .1);
+      bottom: 1%;
+      right: 2%
+    }
+    :nth-child(10) {
+      background: hsla(0, 0%, 100%, .05);
+      bottom: 1%;
+      left: 1%;
+      right: auto
+    }
+  }
 </style>

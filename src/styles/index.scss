@@ -135,12 +135,24 @@ div:focus{
         height: 100%;
       }
     }
+    .svg-icon {
+      margin-right: 20px;
+    }
   }
   .main-container {
     padding-top: 0;
-  }
-  .svg-icon {
-    margin-right: 20px;
+    overflow: hidden;
+    .navbar {
+      background-color: #e8edf1;
+    }
+    .app-main {
+      min-height: auto;
+      height: calc(100% - 80px);
+      .app-container {
+        height: 100%;
+        background-color: #f0f2f5;
+      }
+    }
   }
 }
 

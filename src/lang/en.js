@@ -2,6 +2,12 @@ export default {
   route: {
     allMenus: 'All Menus',
     dashboard: 'Dashboard',
+    'flowable-modeler': 'flowable-modeler',
+    processes: 'processes',
+    casemodels: 'casemodels',
+    forms: 'forms',
+    'decision-tables': 'decision-tables',
+    apps: 'apps',
     introduction: 'Introduction',
     documentation: 'Documentation',
     guide: 'Guide',

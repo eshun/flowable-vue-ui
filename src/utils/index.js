@@ -291,7 +291,7 @@ export function isExternal(path) {
 }
 
 export function childToParent(items) {
-  items.forEach((item, i) => {
+  items && items.forEach((item, i) => {
     if (item.children) {
       item.children.forEach((child, j) => {
         child.parent = item

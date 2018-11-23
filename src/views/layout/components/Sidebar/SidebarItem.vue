@@ -1,11 +1,11 @@
 <template>
-  <div v-if="!item.hidden&&item.children" class="menu-wrapper">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)">
+  <div v-if="!item.hidden" class="menu-wrapper">
+    <template>
       <menu-item
-        :index="resolvePath(onlyOneChild.path)"
+        :index="resolvePath(item.path)"
         :class="{'submenu-title-noDropdown':!isNest}"
-        :icon="onlyOneChild.meta.icon||item.meta.icon"
-        :title="generateTitle(onlyOneChild.meta.title)"
+        :icon="item.meta.icon"
+        :title="generateTitle(item.meta.title)"
         @toggleRemove="toggleRemove" />
     </template>
   </div>

@@ -2,6 +2,12 @@ export default {
   route: {
     allMenus: '所有菜单',
     dashboard: '首页',
+    'flowable-modeler': 'flowable-modeler',
+    processes: '流程模型',
+    casemodels: '案例模型',
+    forms: '表单模型',
+    'decision-tables': '决策模型',
+    apps: '应用程序',
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',
