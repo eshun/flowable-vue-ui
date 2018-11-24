@@ -98,9 +98,9 @@ export default {
         this.$store.dispatch('toggleSideBar', false)
       }
     },
-    dragEnd: evt => {
-      // console.log(evt)
-      // this.$store.dispatch('sortFavorites', { from: evt.from, to: evt.to })
+    dragEnd(evt) {
+      console.log(evt)
+      this.$store.dispatch('sortFavorites', { x: evt.oldIndex, y: evt.newIndex })
     },
     generateTitle
   }

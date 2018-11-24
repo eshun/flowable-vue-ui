@@ -5,7 +5,7 @@
         <h5>{{ getTitle(item) }}</h5>
         <ul>
           <li v-for="child in item.children">
-            <app-link :to="item.path + '/' +child.path">
+            <app-link :to="child.path">
               {{ getTitle(child) }}
             </app-link>
             <span class="sidebar-icon-star-wrapper">
@@ -88,12 +88,7 @@ export default {
       this.$store.dispatch('addFavorites', {name: item.name, path, meta: item.meta})
     },
     toggleUnStart(item, parent) {
-      if (!item.alwaysShow) {
-        const path = parent.path + '/'+item.path
-        this.$store.dispatch('removeFavorites', {name: item.name, path, meta: item.meta})
-      } else {
-        Message.error('alwaysShow no unStart')
-      }
+      this.$store.dispatch('removeFavorites', {name: item.name, path: item.path, meta: item.meta})
     }
   }
 }

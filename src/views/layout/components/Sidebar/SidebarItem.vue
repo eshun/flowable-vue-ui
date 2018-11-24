@@ -80,11 +80,7 @@ export default {
       return isExternal(routePath)
     },
     toggleRemove(item) {
-      if (!item.alwaysShow) {
-        this.$store.dispatch('removeFavorites', { name: item.name, path: item.path })
-      } else {
-        Message.error('alwaysShow no unStart')
-      }
+      this.$store.dispatch('removeFavorites', { name: item.name, path: item.path })
     },
     generateTitle
   }

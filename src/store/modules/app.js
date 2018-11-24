@@ -1,28 +1,13 @@
 import Cookies from 'js-cookie'
+import CircularJSON from 'circular-json'
 import { childToParent } from '@/utils/'
-
-function getFavorites(menu) {
-  const routers = []
-  if (menu) {
-    const allMenu = childToParent(menu)
-    const item = allMenu.filter(c => c.alwaysShow)
-    item.forEach(r => {
-      if (r.parent) {
-        r.path = r.parent.path + '/' + r.path
-      }
-      routers.push(r)
-    })
-  }
-  routers.concat(Cookies.getJSON('menuFavorites'))
-  return routers
-}
 
 const app = {
   state: {
     sidebar: {
       opened: false,
       withoutAnimation: false,
-      favorites: getFavorites()
+      favorites: Cookies.getJSON('menuFavorites') || []
     },
     device: 'desktop',
     language: Cookies.get('language') || 'en',
@@ -44,24 +29,43 @@ const app = {
     ADD_FAVORITES: (state, menu) => {
       if (state.sidebar.favorites.some(v => v.path === menu.path)) return
       state.sidebar.favorites.push(
-        Object.assign({}, menu)
+        { name: menu.name, path: menu.path, meta: menu.meta }
       )
-      // Cookies.set('menuFavorites', JSON.stringify(state.sidebar.favorites))
+      if (state.sidebar.favorites) {
+        Cookies.set('menuFavorites', CircularJSON.stringify(state.sidebar.favorites))
+      }
     },
     INIT_FAVORITES: (state, menu) => {
-      state.sidebar.favorites = getFavorites(menu)
+      if (menu) {
+        const allMenu = childToParent(menu)
+        const item = allMenu.filter(c => c.alwaysShow)
+        item.forEach(r => {
+          if (r.parent) {
+            r.path = r.parent.path + '/' + r.path
+          }
+          if (!state.sidebar.favorites.some(v => v.path === r.path)) {
+            state.sidebar.favorites.push({ name: r.name, path: r.path, meta: r.meta })
+          }
+        })
+        if (state.sidebar.favorites) {
+          Cookies.set('menuFavorites', CircularJSON.stringify(state.sidebar.favorites))
+        }
+      }
     },
     REMOVE_FAVORITES: (state, menu) => {
       for (const [i, v] of state.sidebar.favorites.entries()) {
-        if (v.path === menu.path) {
+        if (v.name === menu.name) {
           state.sidebar.favorites.splice(i, 1)
           break
         }
       }
-      // Cookies.set('menuFavorites', JSON.stringify(state.sidebar.favorites))
+      Cookies.set('menuFavorites', JSON.stringify(state.sidebar.favorites))
     },
-    SORT_FAVORITES: (state, { from, to }) => {
-      // arr.splice(x - 1, 1, ...arr.splice(y - 1, 1, arr[x - 1]))
+    SORT_FAVORITES: (state, { x, y }) => {
+      const arry = state.sidebar.favorites
+      arry.splice(x - 1, 1, ...arry.splice(y - 1, 1, arry[x - 1]))
+      state.sidebar.favorites = arry
+      Cookies.set('menuFavorites', CircularJSON.stringify(state.sidebar.favorites))
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
