@@ -35,7 +35,7 @@ flowableModule.service('GroupService', ['$http', '$q',
             if (filterText !== null && filterText !== undefined) {
                 params.filter = filterText;
             }
-            
+
             if (group && group.id) {
                 params.groupId = group.id;
             }
@@ -43,7 +43,7 @@ flowableModule.service('GroupService', ['$http', '$q',
             return httpAsPromise(
                 {
                     method: 'GET',
-                    url: FLOWABLE.CONFIG.contextRoot + '/app/rest/admin/groups',
+                    url: FLOWABLE.CONFIG.serviceRoot + '/app/rest/admin/groups',
                     params: params
                 }
             )

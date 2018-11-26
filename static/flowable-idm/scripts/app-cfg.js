@@ -1,5 +1,5 @@
 /* Copyright 2005-2015 Alfresco Software, Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,12 +18,15 @@
 var FLOWABLE = FLOWABLE || {};
 
 var pathname = window.location.pathname.replace(/^(\/[^\/]*)(\/.*)?$/, '$1').replace(/\/$/, '');
+var path = "/static/flowable-idm";
+var pathweb = "/flowable-idm";
 
 FLOWABLE.CONFIG = {
 	'onPremise' : true,
-	'contextRoot' : pathname,
-	'webContextRoot' : pathname,
-    'datesLocalization' : false
+  'contextRoot' : path,
+  'webContextRoot' : path,
+  'serviceRoot' : pathweb,
+  'datesLocalization' : false
 };
 
 //

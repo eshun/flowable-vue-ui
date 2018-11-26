@@ -138,6 +138,9 @@ div:focus{
     .svg-icon {
       margin-right: 20px;
     }
+    .el-dialog__wrapper {
+      overflow: hidden;
+    }
   }
   .main-container {
     padding-top: 0;

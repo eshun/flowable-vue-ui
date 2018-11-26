@@ -113,7 +113,7 @@ flowableApp
         .otherwise({
             redirectTo: FLOWABLE.CONFIG.appDefaultRoute || '/user-mgmt'
         });
-    
+
         // Initialize angular-translate
         $translateProvider.useStaticFilesLoader({
             prefix: './i18n/',
@@ -156,7 +156,7 @@ flowableApp
             };
 
             $rootScope.restRootUrl = function() {
-                return FLOWABLE.CONFIG.contextRoot;
+                return FLOWABLE.CONFIG.serviceRoot;
             };
 
             // Needed for auto-height
@@ -236,13 +236,13 @@ flowableApp
         $rootScope.alerts = {
             queue: []
         };
-        
+
         $rootScope.webRootUrl = function() {
             return FLOWABLE.CONFIG.webContextRoot;
         };
-        
+
         $rootScope.restRootUrl = function() {
-            return FLOWABLE.CONFIG.contextRoot;
+            return FLOWABLE.CONFIG.serviceRoot;
         };
 
         $rootScope.showAlert = function(alert) {
@@ -337,7 +337,7 @@ flowableApp
 
         // Call when the user is authenticated
         $rootScope.$on('event:auth-authConfirmed', function(event, data) {
-        
+
             $rootScope.authenticated = true;
             $rootScope.authenticationChecked = true;
 
@@ -348,7 +348,7 @@ flowableApp
                 var locationPath = $location.path();
                 if (locationPath == '' || locationPath == '#' || locationPath == '/login'
                     || locationPath.indexOf('/account/activate/') >= 0 || locationPath.indexOf('/account/reset-password/') >= 0) {
-                      
+
                     $location.path('/');
                 }
             }
@@ -367,7 +367,7 @@ flowableApp
 
         // Call when login fails
         $rootScope.$on('event:auth-loginFailed', function() {
-            $rootScope.addAlertPromise($translate('LOGIN.MESSAGES.ERROR.AUTHENTICATION'), 'error'); 
+            $rootScope.addAlertPromise($translate('LOGIN.MESSAGES.ERROR.AUTHENTICATION'), 'error');
         });
 
         $rootScope.backToLanding = function() {
@@ -380,7 +380,7 @@ flowableApp
             $window.location.href = baseUrl;
         };
 }])
-	
+
 	// Moment-JS date-formatting filter
     .filter('dateformat', function() {
         return function(date, format) {

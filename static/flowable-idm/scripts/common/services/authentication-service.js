@@ -155,12 +155,12 @@ flowableApp.factory('AuthenticationSharedService', ['$rootScope', '$http', 'auth
       return {
         authenticate: function() {
           var deferred = $q.defer();
-          $http.get(FLOWABLE.CONFIG.contextRoot + '/app/rest/authenticate', {ignoreErrors: true, ignoreAuthModule: 'ignoreAuthModule'})
+          $http.get(FLOWABLE.CONFIG.serviceRoot + '/app/rest/authenticate', {ignoreErrors: true, ignoreAuthModule: 'ignoreAuthModule'})
               .success(function (data, status, headers, config) {
 
                   var redirectOnAuthSuccess = $location.search().redirectOnAuthSuccess;
                   if (!redirectOnAuthSuccess) {
-                    var authUrl = FLOWABLE.CONFIG.contextRoot + '/app/rest/account';
+                    var authUrl = FLOWABLE.CONFIG.serviceRoot + '/app/rest/account';
                     $http.get(authUrl)
                         .success(function (data, status, headers, config) {
                             $rootScope.account = data;
@@ -187,15 +187,15 @@ flowableApp.factory('AuthenticationSharedService', ['$rootScope', '$http', 'auth
 
           return deferred.promise;
         },
-          
+
         login: function (param) {
             var data ="j_username=" + encodeURIComponent(param.username) +"&j_password=" + encodeURIComponent(param.password) +"&_spring_security_remember_me=true&submit=Login";
-            $http.post(FLOWABLE.CONFIG.contextRoot + '/app/authentication', data, {
+            $http.post(FLOWABLE.CONFIG.serviceRoot + '/app/authentication', data, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 ignoreAuthModule: 'ignoreAuthModule'
-                
+
             }).success(function (data, status, headers, config) {
                 $rootScope.authenticationError = false;
 
@@ -203,7 +203,7 @@ flowableApp.factory('AuthenticationSharedService', ['$rootScope', '$http', 'auth
                     param.success(data, status, headers, config);
                 }
                 authService.loginConfirmed();
-                
+
             }).error(function (data, status, headers, config) {
                 $rootScope.$broadcast('event:auth-loginFailed');
                 if(param.error){
@@ -214,7 +214,7 @@ flowableApp.factory('AuthenticationSharedService', ['$rootScope', '$http', 'auth
         logout: function () {
             $rootScope.authenticated = false;
             $rootScope.authenticationError = false;
-            $http.get(FLOWABLE.CONFIG.contextRoot + '/app/logout')
+            $http.get(FLOWABLE.CONFIG.serviceRoot + '/app/logout')
                 .success(function (data, status, headers, config) {
                     $rootScope.login = null;
                     $rootScope.authenticated = false;

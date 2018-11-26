@@ -5,15 +5,15 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <lang-select class="international right-menu-item"/>
-
         <el-tooltip :content="$t('navbar.screenfull')" effect="dark" placement="bottom">
           <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
+        <lang-select class="international right-menu-item"/>
       </template>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img v-if="avatar!==''" :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <span v-else v-text="name" class="user-name"></span>
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -101,8 +101,9 @@ export default {
       margin: 0 8px;
     }
     .screenfull {
-      height: 20px;
+      height: 50px;
       fill: #606266;
+      vertical-align: top;
     }
     .international{
       vertical-align: top;
@@ -116,6 +117,7 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+        display: table-row;
         .user-avatar {
           cursor: pointer;
           width: 40px;
