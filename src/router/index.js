@@ -9,6 +9,7 @@ import Layout from '@/views/layout/Layout'
 /* Router Modules */
 import modelerRouter from './modules/flowable-modeler'
 import idmRouter from './modules/flowable-idm'
+import taskRouter from './modules/flowable-task'
 
 /**
  * name 值唯一
@@ -67,6 +68,8 @@ export const constantRouterMap = [
       }
     ]
   },
+
+  taskRouter,
 
   modelerRouter,
 

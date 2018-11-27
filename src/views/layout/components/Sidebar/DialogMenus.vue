@@ -67,7 +67,6 @@ export default {
     },
     checkStart(item) {
       if (this.routers && item) {
-        console.log(this.routers, item.name)
         const index = this.routers.findIndex(r => {
           if (item.name) {
             return r.name === item.name
